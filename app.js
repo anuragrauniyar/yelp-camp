@@ -23,18 +23,14 @@ const MongoDBStore = require("connect-mongo")(session);
 
 const dbUrl = process.env.DB_URL;
 
-mongoose.connect(dbUrl, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-});
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-    console.log("Database connected");
-});
+mongoose.connect(process.env.DB_URL)
+  .then(() => {
+    console.log("✅ Database connected");
+  })
+  .catch(err => {
+    console.error("❌ Connection error:", err);
+  });
 
 const app = express();
 
