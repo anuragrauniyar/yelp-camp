@@ -10,13 +10,9 @@ router.route('/register')
     .get(users.renderRegister)
     .post(catchAsync(users.register));
 
-router.get('/login', users.renderLogin);
-
-router.post('/login',
-    users.storeReturnTo,
-    passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }),
-    users.login
-);
+router.route('/login')
+    .get(users.renderLogin)
+    .post(users.storeReturnTo, passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), users.login );
 
 router.get('/logout', users.logout)
 
