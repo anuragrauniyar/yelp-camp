@@ -18,18 +18,20 @@ const mongoSanitize = require('express-mongo-sanitize');
 const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
-
-const MongoDBStore = require("connect-mongo")(session);
+const MongoDBStore = require("connect-mongo");
 
 const dbUrl = process.env.DB_URL;
 
-
-mongoose.connect(process.env.DB_URL)
+mongoose.set('strictQuery', true); 
+mongoose.connect(dbUrl, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
   .then(() => {
-    console.log("✅ Database connected");
+    console.log("✅ MongoDB Connected");
   })
   .catch(err => {
-    console.error("❌ Connection error:", err);
+    console.error("❌ MongoDB Connection Error:", err);
   });
 
 const app = express();
@@ -46,10 +48,9 @@ app.use(mongoSanitize({
 }))
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
-const store = new MongoDBStore({
-    url: dbUrl,
-    secret,
-    touchAfter: 24 * 60 * 60
+const store = MongoDBStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 3600
 });
 
 store.on("error", function (e) {
