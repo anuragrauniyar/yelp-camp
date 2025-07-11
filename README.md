@@ -1,12 +1,12 @@
 # YelpCamp
 
-![YelpCamp India](https://img.shields.io/badge/YelpCamp-India-orange?style=for-the-badge)
+![YelpCamp](https://img.shields.io/badge/YelpCamp-orange?style=for-the-badge)
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
 
-YelpCamp India is a full-stack web application for discovering and sharing campgrounds across world. It allows users to register, create, edit, and review campgrounds with interactive maps and image uploads. Explore the diverse camping destinations across the Indian subcontinent!
+YelpCamp is a full-stack web application for discovering and sharing campgrounds across world. It allows users to register, create, edit, and review campgrounds with interactive maps and image uploads. Explore the diverse camping destinations across the world!
 
 
 ## 🛠 Tech Stack
@@ -136,7 +136,7 @@ Visit `http://localhost:3000` in your browser.
 ## 📁 Project Structure
 
 ```
-yelpcamp-india/
+yelpcamp/
 ├── app.js                 # Main application file
 ├── package.json          # Project dependencies
 ├── .env                  # Environment variables
@@ -160,7 +160,7 @@ yelpcamp-india/
 │   └── javascripts/      # Client-side JS
 ├── seeds/                # Database seeding
 │   ├── index.js          # Seed script
-│   ├── cities.js         # 300+ Indian cities data
+│   ├── cities.js         # 100+ Indian cities data
 │   └── seedHelpers.js    # Helper functions
 └── utils/                # Utility functions
     └── catchAsync.js     # Error handling wrapper
