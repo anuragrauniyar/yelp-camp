@@ -84,12 +84,12 @@ passport.deserializeUser(User.deserializeUser());
 
 // Set locals middleware BEFORE routes and AFTER passport
 app.use((req, res, next) => {
-    console.log('User in session:', req.user); // Debug log
-    res.locals.currentUser = req.user || null; // Ensure it's never undefined
-    res.locals.success = req.flash('success');
-    res.locals.error = req.flash('error');
+    res.locals.currentUser = req.user || null;
+    res.locals.success = req.flash('success') || [];
+    res.locals.error = req.flash('error') || [];
     next();
-})
+});
+
 
 app.use(helmet());
 
