@@ -1,12 +1,12 @@
-# YelpCamp
+# CampConnect
 
-![YelpCamp](https://img.shields.io/badge/YelpCamp-orange?style=for-the-badge)
+![CampConnect](https://img.shields.io/badge/CampConnect-orange?style=for-the-badge)
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
 
-YelpCamp is a full-stack web application for discovering and sharing campgrounds across world. It allows users to register, create, edit, and review campgrounds with interactive maps and image uploads. Explore the diverse camping destinations across the world!
+CampConnect is a full-stack web application for discovering and sharing campgrounds across world. It allows users to register, create, edit, and review campgrounds with interactive maps and image uploads. Explore the diverse camping destinations across the world!
 
 
 ## 🛠 Tech Stack
@@ -84,7 +84,7 @@ YelpCamp is a full-stack web application for discovering and sharing campgrounds
 ### 📁 1. Clone the Repository
 ```bash
 git clone https://github.com/anuragrauniyar/yelp-camp.git
-cd yelp-camp
+cd camp-connect
 ```
 
 ### 📦 2. Install Dependencies
@@ -136,7 +136,7 @@ Visit `http://localhost:3000` in your browser.
 ## 📁 Project Structure
 
 ```
-yelpcamp/
+CampConnect/
 ├── app.js                 # Main application file
 ├── package.json          # Project dependencies
 ├── .env                  # Environment variables
@@ -217,7 +217,7 @@ const map = new maptilersdk.Map({
 
 ## 🙏 Acknowledgments
 
-- **Colt Steele** for the YelpCamp concept
+- **Colt Steele** for the CampConnect concept
 - **Bootstrap** for the responsive UI framework
 - **MapTiler** for excellent mapping services
 - **Cloudinary** for image management

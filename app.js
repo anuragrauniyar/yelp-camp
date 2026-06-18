@@ -91,7 +91,9 @@ app.use((req, res, next) => {
 });
 
 
-app.use(helmet());
+app.use(helmet({
+    crossOriginEmbedderPolicy: false, 
+}));
 
 const scriptSrcUrls = [
     "https://stackpath.bootstrapcdn.com/",
@@ -110,9 +112,16 @@ const styleSrcUrls = [
 ];
 const connectSrcUrls = [
     "https://api.maptiler.com/",
+    "https://cdn.maptiler.com/",
+    "https://stackpath.bootstrapcdn.com/",
+    "https://cdn.jsdelivr.net"
 ];
 
-const fontSrcUrls = [];
+
+const fontSrcUrls = [
+    "https://fonts.gstatic.com/",      
+    "https://cdnjs.cloudflare.com/"
+];
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
@@ -128,7 +137,8 @@ app.use(
                 "data:",
                 "https://res.cloudinary.com/dn6hy0clc/",
                 "https://images.unsplash.com/",
-                "https://api.maptiler.com" 
+                "https://api.maptiler.com",
+                "https://cdn.maptiler.com/" 
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
         },
