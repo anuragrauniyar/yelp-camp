@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const mongoose = require('mongoose');
 const Campground = require('../models/campground');
+const User = require('../models/user');
 const cities = require('./cities');
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
@@ -21,9 +22,18 @@ mongoose.connect(dbUrl, {
 
 const seedDB = async () => {
     await Campground.deleteMany({});
+    const sampleUser = await User.findOne({});
+    
+    if (!sampleUser) {
+        console.log("❌ ERROR: No users found in the database! Go register a user via the UI first before running the seed script.");
+        return;
+    }
+
+    console.log(`🌱 Seeding campgrounds linked to user: ${sampleUser.username} (${sampleUser._id})`);
+
     for (let campData of cities) {
         const camp = new Campground({
-            author: '686d0d7b10c386153ca2aa43', // replace with your actual user ID
+            author: sampleUser._id, 
             location: `${campData.city}, ${campData.state}`,
             title: campData.title,
             description: campData.description,
@@ -32,11 +42,16 @@ const seedDB = async () => {
                 type: "Point",
                 coordinates: [campData.longitude, campData.latitude]
             },
-            images: []
-
+            images: [
+                {
+                    url: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                    filename: 'CampConnect/seed_default_image'
+                }
+            ]
         });
         await camp.save();
     }
+    console.log("✅ Database successfully re-seeded!");
 };
 
 seedDB().then(() => {

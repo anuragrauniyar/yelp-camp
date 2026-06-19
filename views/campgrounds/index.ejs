@@ -1,7 +1,19 @@
 <% layout('layouts/boilerplate')%>
 <div id="cluster-map"></div>
-<div class="container">
-    <h1>All Campgrounds</h1>
+<div class="container mt-4">
+    
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+        <div class="mb-4 d-flex justify-content-start align-items-center">
+            <a href="/campgrounds" class="btn btn-sm <%= !isFilteringDashboard ? 'btn-primary' : 'btn-outline-primary' %> mr-2">
+                All Campgrounds
+            </a>
+            <a href="/campgrounds?filter=mine" class="btn btn-sm <%= isFilteringDashboard ? 'btn-primary' : 'btn-outline-primary' %>">
+                My Listed Campgrounds (<%= myListingsCount %>)
+            </a>
+        </div>
+    <% } %>
+
+    <h1><%= isFilteringDashboard ? "My Listed Accommodations" : "All Campgrounds" %></h1>
 
     <% for (let campground of campgrounds){%>
     <div class="card mb-3">
@@ -29,6 +41,7 @@
     </div>
     <% }%>
 </div>
+
 <script>
     const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
     const campgrounds = { features: <%- JSON.stringify(campgrounds) %>}

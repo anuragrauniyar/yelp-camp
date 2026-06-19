@@ -5,8 +5,20 @@ const { cloudinary } = require("../cloudinary");
 
 
 module.exports.index = async (req, res) => {
-    const campgrounds = await Campground.find({});
-    res.render('campgrounds/index', { campgrounds })
+    let query = {};
+    let isFilteringDashboard = false;
+    let myListingsCount = 0;
+    if (req.user) {
+        myListingsCount = await Campground.countDocuments({ author: req.user._id });
+    }
+
+    if (req.query.filter === 'mine' && req.user) {
+        query = { author: req.user._id };
+        isFilteringDashboard = true;
+    }
+
+    const campgrounds = await Campground.find(query);
+    res.render('campgrounds/index', { campgrounds, isFilteringDashboard, myListingsCount });
 }
 
 module.exports.renderNewForm = (req, res) => {

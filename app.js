@@ -75,14 +75,12 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
-// Initialize passport BEFORE helmet
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Set locals middleware BEFORE routes and AFTER passport
 app.use((req, res, next) => {
     res.locals.currentUser = req.user || null;
     res.locals.success = req.flash('success') || [];

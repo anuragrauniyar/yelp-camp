@@ -43,7 +43,7 @@ const CampgroundSchema = new Schema({
             ref: 'Review'
         }
     ]
-}, opts);
+}, { timestamps: true });
 
 
 CampgroundSchema.virtual('properties.popUpMarkup').get(function () {
