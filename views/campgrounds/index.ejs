@@ -43,8 +43,65 @@
 </div>
 
 <script>
-    const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
-    const campgrounds = { features: <%- JSON.stringify(campgrounds) %>}
+    const campgroundsData = <%- JSON.stringify(campgrounds) %>;
 </script>
 
-<script src="/javascripts/clusterMap.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+
+<script>
+    // 4. Fallback execution vector to prevent layout engine crashes
+    document.addEventListener("DOMContentLoaded", function () {
+        const mapContainer = document.getElementById('cluster-map');
+        if (!mapContainer) return;
+
+        // Initialize a clean Leaflet instance focused globally over India/Default region
+        const map = L.map('cluster-map').setView([20.5937, 78.9629], 5);
+
+        // Render the OpenStreetMap mapnik tile layout layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Instantiate the marker clustering subsystem layer group
+        const markers = L.markerClusterGroup();
+
+        // Safety verification: ensure your database objects contain real geographic coordinates
+        if (campgroundsData && campgroundsData.length > 0) {
+            const coordinatesArray = [];
+
+            campgroundsData.forEach(function (camp) {
+                if (camp.geometry && camp.geometry.coordinates) {
+                    const lon = camp.geometry.coordinates[0];
+                    const lat = camp.geometry.coordinates[1];
+                    
+                    // Leaflet coordinates system uses strict [Latitude, Longitude] sequencing
+                    const marker = L.marker([lat, lon]);
+                    
+                    // Bind interactive hover popup windows containing database linkages
+                    marker.bindPopup(`
+                        <h6><a href="/campgrounds/${camp._id}">${camp.title}</a></h6>
+                        <p class="text-muted">${camp.location}</p>
+                    `);
+                    
+                    markers.addLayer(marker);
+                    coordinatesArray.push([lat, lon]);
+                }
+            });
+
+            // Append the clustered marker dataset directly onto the live tile canvas layer
+            map.addLayer(markers);
+
+            // Automatically pan and zoom the screen boundary box to snap cleanly onto your camps
+            if (coordinatesArray.length > 0) {
+                map.fitBounds(coordinatesArray, { padding: [50, 50] });
+            }
+        }
+        console.log("🚀 Leaflet Data Clusters mounted and rendered successfully.");
+    });
+</script>
