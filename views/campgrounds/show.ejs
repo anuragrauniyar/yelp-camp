@@ -138,26 +138,41 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        if (campgroundData && campgroundData.geometry && campgroundData.geometry.coordinates) {
+        if (
+            campgroundData &&
+            campgroundData.geometry &&
+            campgroundData.geometry.coordinates
+        ) {
             const lon = campgroundData.geometry.coordinates[0];
             const lat = campgroundData.geometry.coordinates[1];
 
-            // Initialize map targeting the specific campground coordinates
             const map = L.map('map').setView([lat, lon], 10);
 
-            // Add OpenStreetMap tile layer
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
+            const maptilerKey = '<%= process.env.MAPTILER_API_KEY %>';
 
-            // Add a permanent marker pin
+            L.tileLayer(
+                `https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}.png?key=${maptilerKey}`,
+                {
+                    tileSize: 512,
+                    zoomOffset: -1,
+                    maxZoom: 20,
+                    attribution:
+                        '&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a> ' +
+                        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+                }
+            ).addTo(map);
+
             L.marker([lat, lon])
                 .addTo(map)
-                .bindPopup(`<h6>${campgroundData.title}</h6><p>${campgroundData.location}</p>`)
+                .bindPopup(
+                    `<h6>${campgroundData.title}</h6>
+                     <p>${campgroundData.location}</p>`
+                )
                 .openPopup();
         }
     });
 </script>
+

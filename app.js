@@ -137,10 +137,11 @@ app.use(
                     "'self'",
                     "blob:",
                     "data:",
-                    "https://res.cloudinary.com/dn6hy0clc/", 
+                    "https://res.cloudinary.com/dn6hy0clc/",
                     "https://images.unsplash.com/",
-                    "https://*.openstreetmap.org/", 
-                    "https://unpkg.com/"
+                    "https://*.openstreetmap.org/",
+                    "https://unpkg.com/",
+                    "https://api.maptiler.com"
                 ],
                 fontSrc: ["'self'", ...fontSrcUrls],
             },

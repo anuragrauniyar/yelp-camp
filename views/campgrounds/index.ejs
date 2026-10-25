@@ -63,10 +63,19 @@
         const map = L.map('cluster-map').setView([20.5937, 78.9629], 5);
 
         // Render the OpenStreetMap mapnik tile layout layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+        const maptilerKey = '<%= process.env.MAPTILER_API_KEY %>';
+
+L.tileLayer(
+    `https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}.png?key=${maptilerKey}`,
+    {
+        tileSize: 512,
+        zoomOffset: -1,
+        maxZoom: 20,
+        attribution:
+            '&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a> ' +
+            '&copy; OpenStreetMap contributors'
+    }
+).addTo(map);
 
         // Instantiate the marker clustering subsystem layer group
         const markers = L.markerClusterGroup();
